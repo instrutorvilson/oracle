@@ -1,0 +1,24 @@
+SHOW CON_NAME;
+
+ALTER SESSION SET CONTAINER = XEPDB1;
+
+CREATE USER pedro IDENTIFIED BY senha123
+    DEFAULT TABLESPACE users
+    QUOTA UNLIMITED ON users;
+
+GRANT CREATE SESSION TO pedro;
+
+GRANT CREATE TABLE TO pedro;
+GRANT CREATE VIEW TO pedro;
+GRANT CREATE SEQUENCE TO pedro;
+GRANT CREATE PROCEDURE TO pedro;
+
+/*forma antiga*/
+GRANT RESOURCE TO novo_usuario;
+
+ALTER USER joao QUOTA UNLIMITED ON users;
+
+/* Conectar no sql plus
+   sqlplus joao/senha123@//localhost:1521/XEPDB1
+*/
+Todos os comandos devem ser executados em uma conexão com usuário que tenha privilegios
