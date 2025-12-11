@@ -1,0 +1,116 @@
+ LISTA DE COMANDOS PARA GERAR RELATÓRIOS NO SQL*PLUS / SQL DEVELOPER
+
+🔷 1) ACCEPT
+📌 Função
+Recebe um valor digitado pelo usuário.
+📌 Exemplo
+ACCEPT v_pedido NUMBER PROMPT 'Informe o número do pedido: ';
+
+O usuário verá uma janela pedindo o número do pedido.
+
+🔷 2) PROMPT
+📌 Função
+Imprime uma linha de texto no relatório.
+📌 Exemplo
+PROMPT ===== CUPOM FISCAL =====
+PROMPT Pedido: &v_pedido
+
+
+🔷 3) SET (Configurações de ambiente)
+Comandos SET controlam como o relatório será exibido e gravado.
+
+🟩 SET LINESIZE
+Define o número máximo de caracteres por linha.
+SET LINESIZE 200
+
+Útil para evitar quebras de linha.
+
+🟩 SET PAGESIZE
+Define quantas linhas cabem por "página" (apenas para SQL*Plus, parcialmente no SQL Developer).
+SET PAGESIZE 100
+
+🟩 SET FEEDBACK
+Mostra ou oculta a frase:
+3 rows selected.
+
+SET FEEDBACK OFF
+
+
+🟩 SET VERIFY
+Oculta mensagens de substituição de variáveis.
+old 1: WHERE id = &id
+new 1: WHERE id = 10
+
+SET VERIFY OFF
+
+
+🟩 SET TRIMSPOOL
+Remove espaços no final das linhas dentro do arquivo SPOOL.
+SET TRIMSPOOL ON
+
+
+🟩 SET TERMOUT
+Controla se a saída é mostrada na tela enquanto roda.
+SET TERMOUT ON
+
+
+🔷 4) COLUMN
+📌 Função
+Formata colunas de saída.
+📌 Exemplos
+📌 Texto limitado a 30 caracteres
+COLUMN descricao FORMAT A30
+
+📌 Número com máscara
+COLUMN valor_total FORMAT 9990.99
+
+
+🔷 5) TTITLE (SQL*Plus)
+📌 Função
+Define o título no topo do relatório.
+TTITLE CENTER 'CUPOM FISCAL' SKIP 1 -
+       CENTER 'PEDIDO: &v_pedido' SKIP 2
+
+No SQL Developer funciona parcialmente.
+
+🔷 6) BTITLE (SQL*Plus)
+📌 Função
+Define o rodapé do relatório.
+BTITLE CENTER 'OBRIGADO PELA PREFERÊNCIA!'
+
+SQL Developer mostra de forma simples.
+
+🔷 7) SPOOL
+📌 Função
+Grava tudo que aparece na tela em um arquivo (TXT, CSV, HTML).
+📌 Exemplos
+Iniciar gravação:
+SPOOL cupom_10.txt;
+
+Parar gravação:
+SPOOL OFF;
+
+🔷 8) SELECT
+Usado para extrair dados que aparecerão no relatório.
+📌 Exemplo
+SELECT descricao, quantidade, valor_unit 
+FROM item_pedido 
+WHERE id_pedido = &v_pedido;
+
+🔷 9) Funções de resumo (SUM, COUNT, AVG, etc.)
+📌 Função
+Produzir totais e resumos usados no relatório.
+📌 Exemplo
+SELECT SUM(quantidade * valor_unit) AS total_pedido
+FROM item_pedido
+WHERE id_pedido = &v_pedido;
+
+🔷 10) Variáveis substituíveis &nome
+Usadas quando o valor é fornecido pelo usuário.
+📌 Exemplo
+WHERE id_pedido = &v_pedido;
+
+🔷 11) Quebras de linha com SKIP (SQL*Plus)
+Usado dentro de TTITLE e BTITLE.
+TTITLE CENTER 'Relatório' SKIP 2
+
